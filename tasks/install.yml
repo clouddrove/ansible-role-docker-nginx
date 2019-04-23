@@ -1,0 +1,22 @@
+---
+
+- name: copy nginx script
+  template:
+    src: "nginx"
+    dest: /usr/local/bin/nginx
+    mode: 0755
+    owner: root
+    group: root
+
+- name: copy nginx script
+  template:
+    src: "nginx.service"
+    dest: /etc/systemd/system/nginx.service
+    mode: 0644
+    owner: root
+    group: root
+
+- name: reload systemd
+  command: systemctl daemon-reload
+  notify:
+    - restart nginx

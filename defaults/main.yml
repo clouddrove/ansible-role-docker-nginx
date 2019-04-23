@@ -1,0 +1,9 @@
+---
+nginx_version: "1.15.11"
+
+nginx_user: nginx
+nginx_group: nginx
+
+nginx_opt_dir: "/opt/nginx"
+nginx_log_dir: "/var/log/nginx"
+

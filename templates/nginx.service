@@ -1,0 +1,10 @@
+[Unit]
+Description=Nginx Server
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStart=/usr/local/bin/nginx
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,16 @@
+---
+
+- name: setup group
+  group:
+    name: "{{ nginx_group }}"
+    system: yes
+  tags:
+    - nginx
+
+- name: setup user
+  user:
+    name: "{{ nginx_user }}"
+    system: yes
+    group: "{{ nginx_group }}"
+  tags:
+    - nginx
