@@ -11,6 +11,7 @@ docker run -u root --net=host --rm --name=nginx \
 	-v {{ nginx_opt_dir }}/sites-enabled:/etc/nginx/sites-enabled:rw \
 	-v {{ nginx_opt_dir }}/nginx.conf:/etc/nginx/nginx.conf:rw \
 	-v {{ nginx_opt_dir }}/ssl:/etc/nginx/ssl:rw \
+	-v {{ nginx_opt_dir }}/site.d:/etc/nginx/site.d:rw \
 	-v /var/www:/var/www:rw \
 	-v /var/log/nginx:/var/log/nginx:rw \
     nginx:"{{ nginx_version }}"
