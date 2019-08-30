@@ -5,8 +5,8 @@
     state: directory
     owner: "{{ nginx_user }}"
     group: "{{ nginx_group }}"
-    mode:   0755
-    recurse: yes
+    mode: 0755
+    recurse: true
   with_items:
     - "{{ nginx_opt_dir }}"
     - "{{ nginx_log_dir }}"
@@ -16,6 +16,20 @@
     - "{{ nginx_opt_dir }}/ssl"
 
 
+- name: transfer site.d configuration
+  template:
+    src: "{{ item }}"
+    dest: "{{ nginx_opt_dir }}/site.d/{{ item | basename }}"
+  with_fileglob:
+    - ../templates/config/site.d/*.*
+
+- name: transfer error-page configuration
+  template:
+    src: "{{ item }}"
+    dest: "{{ nginx_opt_dir }}/error-page/{{ item | basename }}"
+  with_fileglob:
+    - ../templates/config/error-page/*.*
+
 - name: transfer nginx.conf configuration
   template:
     src: "{{ item }}"
@@ -23,9 +37,19 @@
   with_fileglob:
     - ../templates/config/nginx.conf
 
-- name: transfer mime.types configuration
+- name: transfer sites-enabled configuration
   template:
     src: "{{ item }}"
-    dest: "{{ nginx_opt_dir }}/mime.types"
+    dest: "{{ nginx_opt_dir }}/sites-enabled/{{ item | basename }}"
   with_fileglob:
-    - ../templates/config/mime.types
+    - ../templates/config/sites-enabled/*.*
+
+- name: create nginx logs files
+  changed_when: false
+  file:
+    path: "{{ item }}"
+    mode: 0644
+    state: touch
+  with_items:
+    - "{{ nginx_log_dir }}/error.log"
+    - "{{ nginx_log_dir }}/access.log"

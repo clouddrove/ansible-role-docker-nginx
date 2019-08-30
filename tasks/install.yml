@@ -8,15 +8,27 @@
     owner: root
     group: root
 
-- name: copy nginx script
+- name: copy nginx service
   template:
     src: "nginx.service"
     dest: /etc/systemd/system/nginx.service
     mode: 0644
     owner: root
     group: root
-
-- name: reload systemd
-  command: systemctl daemon-reload
   notify:
     - restart nginx
+
+- name: ensure nginx service is restarted
+  service:
+    name: nginx
+    state: restarted
+  changed_when: false
+
+- name: wait for nginx to become ready
+  wait_for:
+    host: "0.0.0.0"
+    port: "80"
+    state: started
+    delay: 5
+    connect_timeout: 15
+    timeout: 300

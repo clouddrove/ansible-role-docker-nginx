@@ -3,14 +3,10 @@
 - name: setup group
   group:
     name: "{{ nginx_group }}"
-    system: yes
-  tags:
-    - nginx
+    system: true
 
 - name: setup user
   user:
     name: "{{ nginx_user }}"
-    system: yes
+    system: true
     group: "{{ nginx_group }}"
-  tags:
-    - nginx

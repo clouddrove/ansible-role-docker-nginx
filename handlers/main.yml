@@ -4,5 +4,14 @@
   service:
     name: nginx
     state: restarted
-    enabled: yes
+    enabled: true
 
+- name: reload nginx
+  systemd:
+    name: nginx
+    state: reloaded
+
+- name: start nginx
+  systemd:
+    name: nginx
+    state: started
