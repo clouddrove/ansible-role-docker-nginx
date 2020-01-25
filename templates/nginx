@@ -15,5 +15,5 @@ docker run -u root --net=host --rm --name=nginx \
 	-v /var/www:/var/www:rw \
 	-v /var/log/nginx:/var/log/nginx:rw \
 	-e NGINX_GENERATE_DEFAULT_VHOST=false \
-	-e STATUS_PAGE_ALLOWED_IP="{{ PublicIp }}" \
+	-e STATUS_PAGE_ALLOWED_IP="{{ PrivateIp }}" \
     polinux/nginx:"{{ nginx_version }}"
