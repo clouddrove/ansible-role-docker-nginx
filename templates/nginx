@@ -3,7 +3,7 @@
 set -eux -o pipefail
 
 # pull the image before so we dont first remove the container and then pull
-docker pull nginx:"{{ nginx_version }}"
+docker pull polinux/nginx:"{{ nginx_version }}"
 
 docker rm -f -v nginx || :
 
@@ -14,4 +14,6 @@ docker run -u root --net=host --rm --name=nginx \
 	-v {{ nginx_opt_dir }}/site.d:/etc/nginx/site.d:rw \
 	-v /var/www:/var/www:rw \
 	-v /var/log/nginx:/var/log/nginx:rw \
-    nginx:"{{ nginx_version }}"
+	-e NGINX_GENERATE_DEFAULT_VHOST=false \
+	-e STATUS_PAGE_ALLOWED_IP=52.50.29.168 \
+    polinux/nginx:"{{ nginx_version }}"

@@ -1,6 +1,6 @@
 ---
 
-nginx_version: "1.15.11"
+nginx_version: "1.9.9"
 
 nginx_user: nginx
 nginx_group: nginx
