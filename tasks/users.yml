@@ -10,4 +10,3 @@
     name: "{{ nginx_user }}"
     system: true
     group: "{{ nginx_group }}"
-
