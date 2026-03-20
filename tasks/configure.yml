@@ -1,6 +1,6 @@
 ---
-- name: create nginx dirs
-  file:
+- name: Create nginx dirs
+  ansible.builtin.file:
     path: "{{ item|safe|trim }}"
     state: directory
     owner: "{{ nginx_user }}"
@@ -16,37 +16,41 @@
     - "{{ nginx_opt_dir }}/ssl"
 
 
-- name: transfer site.d configuration
-  template:
+- name: Transfer site.d configuration
+  ansible.builtin.template:
+    mode: "0644"
     src: "{{ item }}"
     dest: "{{ nginx_opt_dir }}/site.d/{{ item | basename }}"
   with_fileglob:
     - ../templates/config/site.d/*.*
 
-- name: transfer error-page configuration
-  template:
+- name: Transfer error-page configuration
+  ansible.builtin.template:
+    mode: "0644"
     src: "{{ item }}"
     dest: "{{ nginx_opt_dir }}/error-page/{{ item | basename }}"
   with_fileglob:
     - ../templates/config/error-page/*.*
 
-- name: transfer nginx.conf configuration
-  template:
+- name: Transfer nginx.conf configuration
+  ansible.builtin.template:
+    mode: "0644"
     src: "{{ item }}"
     dest: "{{ nginx_opt_dir }}/nginx.conf"
   with_fileglob:
     - ../templates/config/nginx.conf
 
-- name: transfer sites-enabled configuration
-  template:
+- name: Transfer sites-enabled configuration
+  ansible.builtin.template:
+    mode: "0644"
     src: "{{ item }}"
     dest: "{{ nginx_opt_dir }}/sites-enabled/{{ item | basename }}"
   with_fileglob:
     - ../templates/config/sites-enabled/*.*
 
-- name: create nginx logs files
+- name: Create nginx logs files
   changed_when: false
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     mode: 0644
     state: touch

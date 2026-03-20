@@ -1,15 +1,15 @@
 ---
 
-- name: copy nginx script
-  template:
+- name: Copy nginx script
+  ansible.builtin.template:
     src: "nginx"
     dest: /usr/local/bin/nginx
     mode: 0755
     owner: root
     group: root
 
-- name: copy nginx service
-  template:
+- name: Copy nginx service
+  ansible.builtin.template:
     src: "nginx.service"
     dest: /etc/systemd/system/nginx.service
     mode: 0644
@@ -18,15 +18,15 @@
   notify:
     - restart nginx
 
-- name: ensure nginx service is restarted
-  service:
-    name: nginx
+- name: Ensure nginx service is restarted
+  ansible.builtin.service:
+    name: Nginx
     state: restarted
     enabled: true
   changed_when: false
 
-- name: wait for nginx to become ready
-  wait_for:
+- name: Wait for nginx to become ready
+  ansible.builtin.wait_for:
     host: "0.0.0.0"
     port: "80"
     state: started
